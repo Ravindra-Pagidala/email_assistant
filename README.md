@@ -1,308 +1,127 @@
-# 📧 AI Email Generation Assistant with Prompt Engineering & Model Evaluation
+# 🚀 AI Email Generation Assistant
 
-## Project Overview
-
-This project is an **AI-powered Email Generation Assistant** built to generate professional emails based on:
-
-- **Intent** → Why the email is being written  
-- **Key Facts** → Important details that must appear in the email  
-- **Tone** → Desired communication style (formal, casual, urgent, empathetic)
-
-Example:
-
-Input:
-- Intent: Follow up after job interview  
-- Key Facts: Interview date, interviewer name, position applied for  
-- Tone: Formal  
-
-Output:
-- A professionally written follow-up email maintaining the requested tone.
+A production-grade AI system that generates professional emails from structured inputs and evaluates model performance using custom metrics.
 
 ---
 
-# 🏗️ Architectural Design Decisions
+# 📌 What This Project Does
 
-This project follows a **modular layered architecture** instead of putting everything in one file.
+This project builds an **AI Email Generation Assistant** that:
 
-Why?
+* Takes structured input:
 
-Because in real-world production systems:
-- Prompt logic changes often  
-- Models may change later  
-- Evaluation metrics may evolve  
-- New scenarios may be added  
+  * 🧠 Intent (why the email is being written)
+  * 📌 Key Facts (must be included)
+  * 🎯 Tone (formal / casual / urgent / empathetic)
 
-Keeping everything modular makes the project:
-- Easier to maintain  
-- Easier to debug  
-- Easier to scale  
+* Generates a **high-quality professional email** using LLMs
+
+* Evaluates output using **custom metrics**
+
+* Compares multiple models (**Gemma vs LLaMA**) to determine:
+
+  * Which produces better emails
+  * Where models fail
+  * Which is better for production
 
 ---
 
-## Project Structure
+# 🧠 Key Features
 
-```bash
-email_assignment/
-│
-├── config/
-│   └── settings.py
-│
-├── models/
-│   ├── gemini_client.py
-│   └── groq_client.py
-│
-├── prompts/
-│   └── advanced_prompt.py
-│
-├── scenarios/
-│   └── test_scenarios.json
-│
-├── evaluation/
-│   ├── metrics.py
-│   └── evaluator.py
-│
-├── results/
-│   ├── gemini_results.csv
-│   └── groq_results.csv
-│
-├── reports/
-│   └── comparative_analysis.md
-│
-├── app.py
-├── .env
-├── .gitignore
-├── requirements.txt
-└── README.md
+### ✉️ Email Generation
+
+* Advanced prompt engineering:
+
+  * Role-based prompting
+  * Few-shot examples
+  * Structured reasoning (CoT)
+
+---
+
+### 📊 Evaluation System
+
+Each generated email is scored on:
+
+1. **Fact Integration**
+
+   * Checks if all key facts are included
+
+2. **Tone Consistency**
+
+   * Ensures tone remains consistent (start → end)
+
+3. **Actionability**
+
+   * Checks if email clearly tells what to do next
+
+---
+
+### ⚙️ Production-Level Engineering
+
+* 🔁 Retry with exponential backoff
+* ⚡ Circuit Breaker (fail fast on API issues)
+* 📜 Structured logging (JSON logs)
+* 🔄 Fallback model support
+* ⚡ Latency tracking
+* 📁 CSV result storage
+
+---
+
+# 🏗️ Architecture Overview
+
+```
+User Input (Intent + Facts + Tone)
+            ↓
+   Prompt Builder (Advanced Prompting)
+            ↓
+   Email Generator Service
+      ↓              ↓
+  Gemini Client   Groq Client
+      ↓              ↓
+   Generated Emails (per model)
+            ↓
+     Evaluation Pipeline
+            ↓
+   Custom Metrics Scoring
+            ↓
+     CSV + Summary Output
 ```
 
 ---
 
-# 📂 Folder Explanation
+# 📂 Project Structure
 
----
-
-## config/
-
-Contains:
-
-### `settings.py`
-
-Responsible for:
-- Loading API keys from `.env`
-- Managing model configurations
-- Keeping secrets/configuration centralized
-
-Think of this like:
-> `application.properties` in Spring Boot.
-
----
-
-## models/
-
-Contains model integration logic.
-
-### `gemini_client.py`
-Handles all Gemini/Gemma API calls.
-
-### `groq_client.py`
-Handles all Groq/LLaMA API calls.
-
-Why separate files?
-Because if one provider changes API tomorrow:
-- Only that file needs modification.
-
----
-
-## prompts/
-
-### `advanced_prompt.py`
-
-Contains prompt templates.
-
-This file handles:
-- Role prompting
-- Few-shot prompting
-- Structured prompt formatting
-
-Why separate?
-Because prompt engineering is the **core logic** of LLM apps.
-
----
-
-## scenarios/
-
-### `test_scenarios.json`
-
-Contains:
-- 10 manually created evaluation test cases
-- Human-written reference emails
-
-Used for:
-- Benchmarking model quality
-
----
-
-## evaluation/
-
-### `metrics.py`
-
-Contains custom scoring logic for:
-
-1. Fact Integration Score  
-2. Tone Consistency Score  
-3. Actionability Score  
-
----
-
-### `evaluator.py`
-
-Acts as evaluation orchestrator.
-
-Responsible for:
-- Running all test scenarios  
-- Calling models  
-- Applying metrics  
-- Saving results  
-
----
-
-## results/
-
-Stores generated CSV outputs after evaluation.
-
-Example:
-
-- Gemini Results
-- Groq Results
-
----
-
-## reports/
-
-Contains final written comparison and recommendation report.
-
----
-
-# 🧠 Prompt Engineering Techniques Used
-
-This system uses advanced prompting strategies:
-
-### 1. Role Prompting
-Makes model behave like a professional email writer.
-
----
-
-### 2. Few-Shot Prompting
-Provides examples of ideal outputs.
-
----
-
-### 3. Structured Instructions
-Explicit formatting/tone guidance to reduce hallucinations.
-
----
-
-# 📊 Evaluation Metrics Implemented
-
----
-
-## 1. Fact Integration Score
-
-Measures:
-> Did the generated email include all required key facts?
-
-Logic:
-- Python keyword-based matching  
-- No LLM involved  
-
----
-
-## 2. Tone Consistency Score
-
-Measures:
-> Did the email maintain requested tone throughout?
-
-Logic:
-- Email split into:
-    - Opening  
-    - Body  
-    - Closing  
-- Each part scored independently.
-
----
-
-## 3. Actionability Score
-
-Measures:
-> Does email clearly tell recipient what to do next?
-
-Checks:
-- Clear ask  
-- Defined next step  
-- Timeframe mentioned  
-
----
-
-# 🤖 Models Compared
-
-This project compares two LLMs:
-
-### Gemma 3 27B (via Gemini)
-
-### LLaMA 4 Scout (via Groq)
-
-Both models are tested on the **same 10 scenarios**.
-
----
-
-# 🚀 Setup Instructions (Run From Scratch)
-
-Follow these steps carefully.
-
----
-
-## Step 1 — Install Python
-
-Make sure Python 3.10+ is installed.
-
-Check version:
-
-```bash
-python --version
 ```
-
-or
-
-```bash
-python3 --version
+.
+├── models/              # LLM clients (Gemini, Groq)
+├── prompts/             # Advanced prompt engineering
+├── evaluation/          # Metrics + evaluation pipeline
+├── config/              # Logging, settings, circuit breaker
+├── scenarios/           # Test scenarios (10 cases)
+├── results/             # Output CSV files
+├── run_evaluation.py    # Entry point
 ```
 
 ---
 
-## Step 2 — Clone Repository
+# ⚙️ Setup Instructions (Step-by-Step)
+
+## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/Ravindra-Pagidala/email_assistant
-cd email_assignment
+git clone <your-repo-link>
+cd <repo-name>
 ```
 
 ---
 
-## Step 3 — Create Virtual Environment
+## 2️⃣ Create Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
----
-
-## Step 4 — Activate Virtual Environment
-
-### Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
+Activate it:
 
 ### Windows:
 
@@ -310,114 +129,144 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
+### Mac/Linux:
+
+```bash
+source venv/bin/activate
+```
+
 ---
 
-## Step 5 — Install Dependencies
+## 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If installing manually:
+If requirements.txt is missing, install manually:
 
 ```bash
-pip install groq google-generativeai python-dotenv pandas requests httpx
+pip install google-generativeai
+pip install groq
+pip install python-dotenv
 ```
 
 ---
 
-# 🔐 Environment Variables Setup
+## 4️⃣ Setup Environment Variables
 
-Create a `.env` file in root directory.
-
-Example:
+Create a `.env` file:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-GROQ_API_KEY=your_groq_api_key_here
+GEMINI_API_KEY=your_gemini_api_key
+GROQ_API_KEY=your_groq_api_key
 ```
 
 ---
 
-## How to Get Keys
+## ▶️ Running the Project
 
-### Gemini Key:
-Get from:
-https://makersuite.google.com/app/apikey
-
----
-
-### Groq Key:
-Get from:
-https://console.groq.com/keys
-
----
-
-# ▶️ Running the Project
-
----
-
-## Run Main App
+### ✅ Run BOTH models (recommended)
 
 ```bash
-python app.py
+python run_evaluation.py --model both
 ```
-
-This will:
-
-1. Load scenarios  
-2. Generate emails  
-3. Evaluate outputs  
-4. Save CSV results  
 
 ---
 
-# 📈 Generated Output
-
-After successful execution:
-
-You will see:
+### ▶️ Run only Gemma (Gemini)
 
 ```bash
-results/
-├── gemini_results.csv
-├── groq_results.csv
+python run_evaluation.py --model gemma
 ```
 
-These CSVs contain:
+---
 
-- Raw generated emails  
-- Metric scores  
-- Average performance  
+### ▶️ Run only Groq (LLaMA)
+
+```bash
+python run_evaluation.py --model groq
+```
 
 ---
 
-# 📌 Final Recommendation from Evaluation
+# 📊 Output
 
-Based on testing:
+After execution:
 
-- **Gemma 3 27B** performed better overall in:
-    - Tone consistency  
-    - Actionability  
-    - Reliability  
+### 📁 CSV Files Generated
 
-- **LLaMA 4 Scout** was significantly faster.
-
-### Production Recommendation:
-Use **Gemma 3 27B** when output quality matters more than speed.
+* `gemma_results.csv`
+* `groq_results.csv`
+* `comparison_summary.csv`
+* partial result files
 
 ---
 
-# 👨‍💻 Author Notes
+### 📈 Metrics Included
 
-This project was designed to simulate how real-world LLM applications are built:
+Each scenario contains:
 
-- Modular architecture  
-- Prompt engineering separation  
-- Evaluation pipeline  
-- Multi-model benchmarking  
-- Production decision analysis  
+* Fact Integration Score
+* Tone Consistency Score
+* Actionability Score
+* Average Score
+* Latency
 
-Rather than simply "calling an API", the goal was to demonstrate engineering thinking behind deploying LLM systems responsibly.
+---
+
+# 🧪 Evaluation Design
+
+* 10 real-world scenarios
+* Each includes:
+
+  * Intent
+  * Key facts
+  * Tone
+  * Human reference email
+
+---
+
+# 📌 Model Comparison Summary
+
+| Metric           | Gemma  | LLaMA          |
+| ---------------- | ------ | -------------- |
+| Fact Integration | 1.00   | 1.00           |
+| Tone Consistency | Higher | Lower          |
+| Actionability    | Higher | Slightly Lower |
+
+### 🏆 Final Result:
+
+👉 **Gemma performs better overall**
+
+---
+
+# ⚖️ Trade-offs
+
+| Use Case                | Recommended Model |
+| ----------------------- | ----------------- |
+| Quality-focused systems | ✅ Gemma           |
+| High-speed bulk systems | ⚡ LLaMA           |
+
+---
+
+# 🚀 Future Improvements
+
+* Add semantic similarity vs reference emails
+* Use independent judge model
+* Improve urgent tone prompting
+* Add UI (web interface)
+
+---
+
+# ⭐ Final Note
+
+This project is not just a prototype —
+it is designed with **production-grade engineering principles**.
+
+---
+# 👨‍💻 Author
+
+Ravindra Pagidala
 
 ---
