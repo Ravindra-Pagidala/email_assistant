@@ -272,7 +272,7 @@ After execution:
 ### 📁 CSV Files Generated
 
 * Results will be saved in `/results`
- `gemma_results.csv`
+* `gemma_results.csv`
 * `groq_results.csv`
 * `comparison_summary.csv`
 * partial result files
