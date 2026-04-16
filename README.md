@@ -109,8 +109,8 @@ User Input (Intent + Facts + Tone)
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone <your-repo-link>
-cd <repo-name>
+git clone https://github.com/Ravindra-Pagidala/email_assistant
+cd email_assistant
 ```
 
 ---
