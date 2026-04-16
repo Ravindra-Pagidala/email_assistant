@@ -106,56 +106,47 @@ User Input (Intent + Facts + Tone)
 
 # ⚙️ Setup Instructions (Step-by-Step)
 
-## 1️⃣ Clone the Repository
+---
 
-```bash
-git clone https://github.com/Ravindra-Pagidala/email_assistant
-cd email_assistant
-```
+# 🔑 API Key Setup (Do this once before running)
+
+This project requires 2 API keys.
 
 ---
 
-## 2️⃣ Create Virtual Environment
+## 1️⃣ Gemini API Key
 
-```bash
-python -m venv venv
-```
+👉 https://aistudio.google.com/app/apikey
 
-Activate it:
+Steps:
 
-### Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-### Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
+1. Login with your Google account
+2. Click **Create API Key**
+3. Copy the generated key
 
 ---
 
-## 3️⃣ Install Dependencies
+## 2️⃣ Groq API Key
 
-```bash
-pip install -r requirements.txt
-```
+👉 https://console.groq.com/keys
 
-If requirements.txt is missing, install manually:
+Steps:
 
-```bash
-pip install google-generativeai
-pip install groq
-pip install python-dotenv
-```
+1. Sign up / Login
+2. Generate API key
+3. Copy the key
 
 ---
 
-## 4️⃣ Setup Environment Variables
+## 3️⃣ Create `.env` File
 
-Create a `.env` file:
+Create a `.env` file in the project root:
+
+```bash
+touch .env
+```
+
+Add your keys:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
@@ -164,29 +155,113 @@ GROQ_API_KEY=your_groq_api_key
 
 ---
 
-## ▶️ Running the Project
+# ⚙️ Project Setup & Execution (Commands Only)
 
-### ✅ Run BOTH models (recommended)
+Follow these commands in order.
+
+---
+
+## 1️⃣ Install Python (if not installed)
 
 ```bash
-python run_evaluation.py --model both
+python3 --version
+```
+
+If not installed:
+
+```bash
+brew install python
 ```
 
 ---
 
-### ▶️ Run only Gemma (Gemini)
+## 2️⃣ Clone Repository
 
 ```bash
-python run_evaluation.py --model gemma
+git clone https://github.com/Ravindra-Pagidala/email_assistant
+cd email_assistant
 ```
 
 ---
 
-### ▶️ Run only Groq (LLaMA)
+## 3️⃣ Create Virtual Environment
 
 ```bash
-python run_evaluation.py --model groq
+python3 -m venv venv
 ```
+
+---
+
+## 4️⃣ Activate Virtual Environment
+
+```bash
+source venv/bin/activate
+```
+
+(Windows)
+
+```bash
+venv\Scripts\activate
+```
+
+---
+
+## 5️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Run the Project
+
+---
+
+### ✅ Run BOTH models
+
+```bash
+python3 run_evaluation.py --model both
+```
+
+---
+
+### ▶️ Run only Gemini
+
+```bash
+python3 run_evaluation.py --model gemma
+```
+
+---
+
+### ▶️ Run only Groq
+
+```bash
+python3 run_evaluation.py --model groq
+```
+---
+
+# ✅ Quick Run (All Commands Together)
+
+```bash
+git clone https://github.com/Ravindra-Pagidala/email_assistant
+cd email_assistant
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+# create .env file with API keys before running
+
+python3 run_evaluation.py --model both
+```
+
+---
+
+# 🚀 Done!
+
+You’re now ready to generate and evaluate emails.
 
 ---
 
@@ -196,23 +271,18 @@ After execution:
 
 ### 📁 CSV Files Generated
 
-* `gemma_results.csv`
+* Results will be saved in `/results`
+ `gemma_results.csv`
 * `groq_results.csv`
 * `comparison_summary.csv`
 * partial result files
 
----
-
-### 📈 Metrics Included
-
-Each scenario contains:
-
-* Fact Integration Score
-* Tone Consistency Score
-* Actionability Score
-* Average Score
-* Latency
-
+* Each CSV contains:
+  * Fact Integration Score
+  * Tone Consistency Score
+  * Actionability Score
+  * Average Score
+  * Latency
 ---
 
 # 🧪 Evaluation Design
