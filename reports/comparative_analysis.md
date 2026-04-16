@@ -61,16 +61,20 @@ The 0.11 difference in tone is not merely superficial. It means LLaMA's emails w
 
 **For quality-first systems — Gemma 3 27B.**
 
-Let’s take Salesforce Einstein writing client-facing proposal emails, or Microsoft Copilot drafting emails in Outlook as examples. In these systems, a human reads the email before it goes out but they're trusting the AI to get it mostly right. A tone drift from formal to casual in a client proposal is embarrassing. An email that doesn't clearly state what should happen next wastes everyone's time.
+Consider enterprise productivity systems that assist users in drafting client-facing proposals or professional business emails where output quality is critical. In these systems, a human reads the email before it goes out but they're trusting the AI to get it mostly right. A tone drift from formal to casual in a client proposal is embarrassing. An email that doesn't clearly state what should happen next wastes everyone's time.
 
 Gemma's 0.87 overall vs LLaMA's 0.81 reflects exactly this. The 6-point gap comes entirely from scenarios where the email tone or structure subtly broke down. Over thousands of emails per day at enterprise scale, those breakdowns compound into real brand and relationship damage. Gemma is the safer choice when email quality is non-negotiable.
 
 **For speed-first and high-volume systems — LLaMA 4 Scout.**
 
-Let’s take HubSpot's automated email sequences, or a bulk outreach tool sending thousands of emails per hour with no human review as examples. LLaMA processes an email in 855ms. Gemma takes 6,280ms. **That's 7.3x faster**. At the scale HubSpot operates **millions of emails per month.** That speed difference is the difference between running the system on 1 server vs 7 servers. LLaMA's 0.81 accuracy is not broken. For bulk formal outreach specifically, LLaMA's formal tone score of 0.90 is strong and reliable.
+Consider high-volume automated outreach systems that generate and send thousands of emails per hour with minimal or no human review. LLaMA processes an email in 855ms. Gemma takes 6,280ms. **That's 7.3x faster**. At the scale HubSpot operates **millions of emails per month.** That speed difference is the difference between running the system on 1 server vs 7 servers. LLaMA's 0.81 accuracy is not broken. For bulk formal outreach specifically, LLaMA's formal tone score of 0.90 is strong and reliable.
 
 ---
 
 **Final recommendation for this system:**
 
-This is a general-purpose email generation assistant supporting all tones. It needs to handle casual employee communications as well as urgent escalations and formal proposals. **So I recommend, Gemma 3 27B for production model.**
+Since this is a general-purpose email assistant that needs to handle everything from casual messages to urgent and formal communication, maintaining the right tone consistently is very important.
+
+While LLaMA 4 Scout is much faster, Gemma 3 27B delivered better overall quality across all evaluation metrics, especially in tone consistency and actionability.
+
+**For this reason, I would recommend Gemma 3 27B as the production model, as output quality matters more here than speed.**
