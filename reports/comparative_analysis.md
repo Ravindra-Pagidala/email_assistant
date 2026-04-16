@@ -23,6 +23,8 @@ An email that ends with "please let me know if you have questions" scores 0.33. 
 
 **Gemma 3 27B won across all 3 metrics.**
 
+When I tested it on my system, I got the following results as output.
+
 | Metric | Gemma 3 27B | LLaMA 4 Scout | Gap |
 | --- | --- | --- | --- |
 | Fact Integration | 1.00 | 1.00 | 0.00 |
